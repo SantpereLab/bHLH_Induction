@@ -6,7 +6,7 @@
 library(rentrez)
 
 # Set project path
-root_dir="/path/to/the/project"
+root_dir <- "/path/to/the/project"
 
 # Set input file path
 input_path <- paste0(root_dir, "/expression_datasets.csv")
