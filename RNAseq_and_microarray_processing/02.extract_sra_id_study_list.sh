@@ -4,9 +4,12 @@
 #### Create a list with the SRAs grouped by study ####
 ######################################################
 
+# Set project path
+root_dir="/path/to/the/project"
+
 # Set input and output file
-input="/users/genomics/jmartinez/temp_data/expression_datasets_csv_with_sra_v01.csv"
-output="/users/genomics/jmartinez/temp_data/study_srr_list.txt"
+input="$root_dir/expression_datasets_csv_with_sra_v01.csv"
+output="$root_dir/study_srr_list.txt"
 
 # Process the input file, skipping the header (tail -n +2), and use awk to extract and format the data
 tail -n +2 "$input" | awk -F',' '  # Use a comma as the field separator
