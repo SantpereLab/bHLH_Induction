@@ -24,13 +24,17 @@
 # Load fastp module
 module load fastp
 
+# Set project path
+root_dir="/path/to/the/project"
+
 # Directories
-BASE_FASTQ_DIR="/users/genomics/jmartinez/data/01_fastqs/00_temp/"
-BASE_OUTPUT_DIR="/users/genomics/jmartinez/data/02_preprocessed_fastqs/00_temp/"
+BASE_FASTQ_DIR="$root_dir/data/01_fastqs/00_temp/"
+BASE_OUTPUT_DIR="$root_dir/data/02_preprocessed_fastqs/00_temp/"
 
 # Define which studies to process
 STUDY_FOLDERS+=(
     "Conerly_2016"
+    ...
 )
 
 start_time=$(date +%s)
