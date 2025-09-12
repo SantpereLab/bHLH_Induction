@@ -21,12 +21,15 @@
 # ------ Get FASTQ from SRA -------
 # ---------------------------------
 
+# Set project path
+root_dir="/path/to/the/project"
+
 # Load SRA toolkit module
 module load SRA-Toolkit/3.0
 
 # Define input file and output directory
-srr_list="/users/genomics/jmartinez/temp_data/study_srr_list_test.txt"
-output_dir="/users/genomics/jmartinez/data/01_fastqs/00_temp"
+srr_list="$root_dir/study_srr_list_test.txt"
+output_dir="$root_dir/data/01_fastqs/00_temp"
 mkdir -p "$output_dir"
 
 # Function to process each SRR
