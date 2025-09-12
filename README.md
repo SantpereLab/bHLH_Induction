@@ -1,0 +1,1 @@
+This repository contains the pipeline I have used to perfom differential gene expression analysis from multiple datasets as part of my master thesis titled "Dissecting the Regulatory Mechanisms of bHLH Transcription Factors through Differential Expression Analysis and Chromatin Profiling".
