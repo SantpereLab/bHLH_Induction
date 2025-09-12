@@ -8,7 +8,7 @@
 root_dir="/path/to/the/project"
 
 # Set input and output file
-input="$root_dir/expression_datasets_csv_with_sra_v01.csv"
+input="$root_dir/expression_datasets_csv_with_sra.csv"
 output="$root_dir/study_srr_list.txt"
 
 # Process the input file, skipping the header (tail -n +2), and use awk to extract and format the data
