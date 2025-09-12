@@ -12,5 +12,10 @@
 module load Miniconda3/20240927
 multiqc --version
 
+# Set project path
+root_dir="/path/to/the/project"
+
+# 
+
 # Run multiqc to gather qc metrics
-multiqc /users/genomics/jmartinez/data/02_preprocessed_fastqs/00_temp/ -o /users/genomics/jmartinez/data/02_preprocessed_fastqs/00_temp/z_multiqc_report
+multiqc "$root_dir/data/02_preprocessed_fastqs/00_temp/" -o "$root_dir/data/02_preprocessed_fastqs/00_temp/z_multiqc_report"
