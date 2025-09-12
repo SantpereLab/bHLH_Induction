@@ -24,6 +24,9 @@
 # Module load
 module load STAR/2.7.8a-GCC-10.2.0
 
+# Set project path
+root_dir="/path/to/the/project"
+
 # Set timer
 start_time=$(date +%s)
 
@@ -31,18 +34,18 @@ start_time=$(date +%s)
 STAR \
   --runThreadN 16 \
   --runMode genomeGenerate \
-  --genomeDir /users/genomics/jmartinez/data/00_reference_genomes/human/indices \
-  --genomeFastaFiles /users/genomics/jmartinez/data/00_reference_genomes/human/raw/GRCh38.primary_assembly.genome.fa \
-  --sjdbGTFfile /users/genomics/jmartinez/data/00_reference_genomes/human/raw/gencode.v47.primary_assembly.annotation.gtf \
+  --genomeDir "$root_dir/data/00_reference_genomes/human/indices" \
+  --genomeFastaFiles "$root_dir/data/00_reference_genomes/human/raw/GRCh38.primary_assembly.genome.fa" \
+  --sjdbGTFfile "$root_dir/data/00_reference_genomes/human/raw/gencode.v47.primary_assembly.annotation.gtf" \
   --sjdbOverhang 100
 
-STAR genome indexing (MOUSE)
+# STAR genome indexing (MOUSE)
 STAR \
   --runThreadN 16 \
   --runMode genomeGenerate \
-  --genomeDir /users/genomics/jmartinez/data/00_reference_genomes/mouse/indices \
-  --genomeFastaFiles /users/genomics/jmartinez/data/00_reference_genomes/mouse/raw/GRCm39.primary_assembly.genome.fa \
-  --sjdbGTFfile /users/genomics/jmartinez/data/00_reference_genomes/mouse/raw/gencode.vM36.primary_assembly.annotation.gtf \
+  --genomeDir "$root_dir/data/00_reference_genomes/mouse/indices" \
+  --genomeFastaFiles "$root_dir/data/00_reference_genomes/mouse/raw/GRCm39.primary_assembly.genome.fa" \
+  --sjdbGTFfile "$root_dir/data/00_reference_genomes/mouse/raw/gencode.vM36.primary_assembly.annotation.gtf" \
   --sjdbOverhang 100
 
 # Stop timer
