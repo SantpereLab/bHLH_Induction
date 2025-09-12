@@ -5,10 +5,13 @@
 # Load libraries
 library(rentrez)
 
+# Set project path
+root_dir="/path/to/the/project"
+
 # Set input file path
-input_path <- "/users/genomics/jmartinez/temp_data/expression_datasets.csv"
+input_path <- paste0(root_dir, "/expression_datasets.csv")
 # Set output file path
-output_path <- "/users/genomics/jmartinez/temp_data/expression_datasets_csv_with_sra.csv"
+output_path <- paste0(root_dir, "/expression_datasets_csv_with_sra.csv")
 
 #------------------------
 #---- Load the data -----
