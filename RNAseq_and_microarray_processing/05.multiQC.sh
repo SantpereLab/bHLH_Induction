@@ -20,4 +20,4 @@ input_dir="$root_dir/data/02_preprocessed_fastqs/00_temp/"
 output_dir="$root_dir/data/02_preprocessed_fastqs/00_temp/z_multiqc_report"
 
 # Run multiqc to gather qc metrics
-multiqc $input_dir -o $output_dir
+multiqc "$input_dir" -o "$output_dir"
