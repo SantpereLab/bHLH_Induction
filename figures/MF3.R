@@ -1,3 +1,236 @@
+##############################
+### Main figure 3a ###########
+##############################
+
+plot_selex<-function(factor) {
+  neurod2_selex<-read.table(paste0(factor,"_motif_selex.txt"), header = T)
+  neurod2_selex_pct<-neurod2_selex[,2:17]/neurod2_selex$total_sequences
+  rownames(neurod2_selex_pct)<-c("1","2","3","4")
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CATATG"))]<-"CAT-CAT"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGCTG"))]<-"CAG-CAG"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACGTG"))]<-"CAC-CAC"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAATTG"))]<-"CAA-CAA"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGATG","CATCTG"))]<-"CAT-CAG"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACATG","CATGTG"))]<-"CAT-CAC"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAATG","CATTTG"))]<-"CAA-CAT"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGGTG","CACCTG"))]<-"CAG-CAC"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAACTG","CAGTTG"))]<-"CAA-CAG"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAGTG","CACTTG"))]<-"CAA-CAC"
+  
+  #Extract unique names
+  nms <- unique(names(neurod2_selex_pct))
+  #Sum columns with the same name
+  neurod2_selex_pct<-sapply(nms, function(x)  rowSums(neurod2_selex_pct[names(neurod2_selex_pct) %in% x]))
+  
+  library(reshape2)
+  neurod2_selex_pct<-setNames(melt(as.matrix(neurod2_selex_pct)), c('round', 'motif', 'proportion'))
+  
+  colors<-c("seagreen3", "azure4","yellow", "deeppink", "turquoise2", "chartreuse1","darkgoldenrod4",
+                      "red","blue", "black")
+                      
+  library(ggplot2)
+  plot<-ggplot(data = neurod2_selex_pct) + theme_classic() +
+    geom_line(aes(x = round, y = proportion, colour = motif, group = motif)) + scale_color_manual(values = colors ) + ggtitle(factor) + theme(legend.position = "none")
+  print(plot)
+}
+
+plot_selex_yin<-function(factor) {
+  neurod2_selex<-as.data.frame(t( read.table(factor, header = T) ) )
+  ### si tiene solo las rondas 3 y 4
+  if (dim(neurod2_selex)[1]==3) {
+    colnames(neurod2_selex)<-neurod2_selex[1,]
+    neurod2_selex<-neurod2_selex[-1,]
+    rownames(neurod2_selex)<-c(3:4)
+    neurod2_selex<-sapply(neurod2_selex, as.numeric)
+    neurod2_selex_pct<-data.matrix(neurod2_selex[,2:17])/as.numeric(neurod2_selex[,1])
+    rownames(neurod2_selex_pct)<-c("3","4")
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CATATG"))]<-"CAT-CAT"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGCTG"))]<-"CAG-CAG"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACGTG"))]<-"CAC-CAC"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAATTG"))]<-"CAA-CAA"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGATG","CATCTG"))]<-"CAT-CAG"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACATG","CATGTG"))]<-"CAT-CAC"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAATG","CATTTG"))]<-"CAA-CAT"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGGTG","CACCTG"))]<-"CAG-CAC"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAACTG","CAGTTG"))]<-"CAA-CAG"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAGTG","CACTTG"))]<-"CAA-CAC"
+    
+    #Extract unique names
+    nms <- unique(colnames(neurod2_selex_pct))
+    neurod2_selex_pct<-as.data.frame(neurod2_selex_pct)
+    #Sum columns with the same name
+    neurod2_selex_pct<-sapply(nms, function(x)  rowSums(neurod2_selex_pct[names(neurod2_selex_pct) %in% x]))
+    
+    library(reshape2)
+    neurod2_selex_pct<-setNames(melt(as.matrix(neurod2_selex_pct)), c('round', 'motif', 'proportion'))
+    
+    colors<-c("seagreen3", "azure4","yellow", "deeppink", "turquoise2", "chartreuse1","darkgoldenrod4",
+                         "red","blue", "black")
+                         
+    library(ggplot2)
+    plot<-ggplot(data = neurod2_selex_pct) + theme_classic() + 
+      geom_line(aes(x = round, y = proportion, colour = motif, group = motif)) + scale_color_manual(values = colors ) + ggtitle(factor) + theme(legend.position = "none")
+    print(plot)
+  }
+  else {
+    colnames(neurod2_selex)<-neurod2_selex[1,]
+    neurod2_selex<-neurod2_selex[-1,]
+    rownames(neurod2_selex)<-c(1:4)
+    neurod2_selex<-sapply(neurod2_selex, as.numeric)
+    neurod2_selex_pct<-data.matrix(neurod2_selex[,2:17])/as.numeric(neurod2_selex[,1])
+    rownames(neurod2_selex_pct)<-c("1","2","3","4")
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CATATG"))]<-"CAT-CAT"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGCTG"))]<-"CAG-CAG"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACGTG"))]<-"CAC-CAC"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAATTG"))]<-"CAA-CAA"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGATG","CATCTG"))]<-"CAT-CAG"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACATG","CATGTG"))]<-"CAT-CAC"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAATG","CATTTG"))]<-"CAA-CAT"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGGTG","CACCTG"))]<-"CAG-CAC"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAACTG","CAGTTG"))]<-"CAA-CAG"
+    colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAGTG","CACTTG"))]<-"CAA-CAC"
+    
+    #Extract unique names
+    nms <- unique(colnames(neurod2_selex_pct))
+    neurod2_selex_pct<-as.data.frame(neurod2_selex_pct)
+    #Sum columns with the same name
+    neurod2_selex_pct<-sapply(nms, function(x)  rowSums(neurod2_selex_pct[names(neurod2_selex_pct) %in% x]))
+    
+    library(reshape2)
+    neurod2_selex_pct<-setNames(melt(as.matrix(neurod2_selex_pct)), c('round', 'motif', 'proportion'))
+    
+    colors<-c("seagreen3", "azure4","yellow", "deeppink", "turquoise2", "chartreuse1","darkgoldenrod4",
+                         "red","blue", "black")
+                         
+    library(ggplot2)
+    plot<-ggplot(data = neurod2_selex_pct) + theme_classic() + 
+      geom_line(aes(x = round, y = proportion, colour = motif, group = motif)) + scale_color_manual(values = colors ) + ggtitle(factor) + theme(legend.position = "none")
+    print(plot)
+  }
+}
+
+
+
+
+#####################
+####### YIN ##########
+#####################
+
+
+# en mycn metil selex no encuentran el motivo enriquecido. (he visto y solo tienen los ciclos 3 y 4)
+
+# para hacer el logo ellos te indican en la suplementary (aaj2239_yin_sm_tables_s1-s6.xlsx) que ciclo usan.
+# y lo comparan con el ciclo anterior, excepto cuando ponen una b. 
+# los que salen los lineplots mios mal, he visto que usan b0.
+# o sea, contra un ciclo 0, que no se cual es.
+
+# entonces yo esas del ciclo 0 las descarto para plotar. 
+# porque yo lo que muestro en los plots son de los ciclos 1 al 4
+
+
+setwd("~/htselex/yin")
+
+yin_edbdd<-list.files(path = ".", pattern = "*.motif_counts.txt" )[grep("eDBD",list.files(path = ".", pattern = "*.motif_counts.txt" ))]
+yin_fl<-list.files(path = ".", pattern = "*.motif_counts.txt" )[grep("FL",list.files(path = ".", pattern = "*.motif_counts.txt" ))]
+yin_fl<-yin_fl[!grepl("eDBD", yin_fl)]
+
+yin_fl_subset<-yin_fl[grep("NEUROD1|NEUROD2|NEUROG2|TWIST2|TWIST1|OLIG2|MSGN1|MESP1|MYOD1|MYF5|ASCL1|ASCL2|TCF4|MYC|MYCN|MITF|HEY1|HEY2|TFE3", yin_fl)]
+yin_edbdd_subset<-yin_edbdd[grep("NEUROD1|NEUROD2|NEUROG2|TWIST2|TWIST1|OLIG2|MSGN1|MESP1|MYOD1|MYF5|ASCL1|ASCL2|TCF4|MYC|MYCN|MITF|HEY1|HEY2|TFE3", yin_edbdd)]
+
+
+yin_fl_max<-yin_fl[grep("MAX", yin_fl)]
+yin_edbd_max<-yin_edbdd[grep("MAX", yin_edbdd)]
+
+
+#(b0 descartadas). y tambien las que tienen solo ciclos 3 y 4
+
+# methyl ht-selex
+metil_yin<-unique(c("HEY2*eDBD*TAAGCT40NTGC","HEY2*FL*TAGGAC40NACA","HEY1*FL*TCCTTC40NATT","TFE3*eDBD*TGGTCC40NTTC","MAX*eDBD*TACCGC40NTAC","MAX*FL*TAGCAT40NAGG","OLIG2*eDBD*TTCATT40NTAT","OLIG2*eDBD*TTCATT40NTAT","NEUROG2*eDBD*TTAAAC40NTAT","NEUROD1*FL*TCAGCC40NTTC","MSGN1*eDBD*TATAGC40NGAC","TCF4*eDBD*TTGTCG40NACC","ASCL1*eDBD*TTACGT40NGGA","ASCL2*eDBD*TTGCTG40NCTA","ASCL2*FL*TGCCCG40NCTG","MYOD1*eDBD*TAAGTT40NGAT","MYOD1*eDBD*TAAGTT40NGAT","MYOD1*FL*TGCGAT40NGAT","MYOD1*FL*TGCGAT40NGAT") )
+metil_yin<-paste0(metil_yin,".motif_counts.txt")
+# ht-selex
+nometil_yin<-unique(c("HEY2*eDBD*TCGAGG40NGTT","HEY2*FL*TGCCAA40NTAG","HEY1*FL*TTGCTT40NCCA","TFE3*eDBD*TGGTTA40NTAC","MAX*eDBD*TCTAGG40NCTG","MAX*FL*TTCTGG40NTGC","OLIG2*eDBD*TACTAG40NGGA","OLIG2*eDBD*TACTAG40NGGA","NEUROG2*eDBD*TTTGTA40NTCC","NEUROD1*FL*TTGTAC40NGTA","MSGN1*eDBD*TTCTTG40NTGC","TCF4*eDBD*TGTATA40NGGT","ASCL1*eDBD*TGCGCA40NCAA","ASCL2*eDBD*TAACTC40NGTC","ASCL2*FL*TTCTCC40NAGA","ASCL2*FL*TTCTCC40NAGA","MYOD1*eDBD*TGTCTG40NAGG","MYOD1*eDBD*TGTCTG40NAGG","MYOD1*FL*TACTAA40NATT","MYOD1*FL*TACTAA40NATT") )
+nometil_yin<-paste0(nometil_yin,".motif_counts.txt")
+
+
+
+
+
+######## methylation selected factors ########
+
+# Plot only for HEY1, HEY2, and MAX
+
+selected_factors <- c("HEY1", "HEY2", "MAX")
+# Plot methyl and non-methyl side-by-side for selected factors
+
+library(gridExtra)
+# Refactor plot_selex_yin to return the ggplot object instead of printing
+plot_selex_yin_return <- function(factor) {
+  neurod2_selex <- as.data.frame(t(read.table(factor, header = T)))
+  if (dim(neurod2_selex)[1] == 3) {
+    colnames(neurod2_selex) <- neurod2_selex[1, ]
+    neurod2_selex <- neurod2_selex[-1, ]
+    rownames(neurod2_selex) <- c(3:4)
+    neurod2_selex <- sapply(neurod2_selex, as.numeric)
+    neurod2_selex_pct <- data.matrix(neurod2_selex[, 2:17]) / as.numeric(neurod2_selex[, 1])
+    rownames(neurod2_selex_pct) <- c("3", "4")
+  } else {
+    colnames(neurod2_selex) <- neurod2_selex[1, ]
+    neurod2_selex <- neurod2_selex[-1, ]
+    rownames(neurod2_selex) <- c(1:4)
+    neurod2_selex <- sapply(neurod2_selex, as.numeric)
+    neurod2_selex_pct <- data.matrix(neurod2_selex[, 2:17]) / as.numeric(neurod2_selex[, 1])
+    rownames(neurod2_selex_pct) <- c("1", "2", "3", "4")
+  }
+  # Rename motifs
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CATATG"))] <- "CAT-CAT"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGCTG"))] <- "CAG-CAG"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACGTG"))] <- "CAC-CAC"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAATTG"))] <- "CAA-CAA"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGATG", "CATCTG"))] <- "CAT-CAG"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CACATG", "CATGTG"))] <- "CAT-CAC"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAATG", "CATTTG"))] <- "CAA-CAT"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAGGTG", "CACCTG"))] <- "CAG-CAC"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAACTG", "CAGTTG"))] <- "CAA-CAG"
+  colnames(neurod2_selex_pct)[which(colnames(neurod2_selex_pct) %in% c("CAAGTG", "CACTTG"))] <- "CAA-CAC"
+  # Sum columns with same name
+  nms <- unique(colnames(neurod2_selex_pct))
+  neurod2_selex_pct <- as.data.frame(neurod2_selex_pct)
+  neurod2_selex_pct <- sapply(nms, function(x) rowSums(neurod2_selex_pct[names(neurod2_selex_pct) %in% x]))
+  library(reshape2)
+  neurod2_selex_pct <- setNames(melt(as.matrix(neurod2_selex_pct)), c('round', 'motif', 'proportion'))
+  colors <- c("seagreen3", "azure4", "yellow2", "hotpink1", "darkorange1", "chartreuse1", "goldenrod2", "firebrick2", "blue", "black")
+  library(ggplot2)
+  plot <- ggplot(data = neurod2_selex_pct) + theme_classic() +
+    geom_line(aes(x = round, y = proportion, colour = motif, group = motif)) +
+    scale_color_manual(values = colors) +
+    ggtitle(factor) +
+    theme(legend.position = "right")
+  return(plot)
+}
+
+
+
+
+pdf("~/Dropbox/induction/4_methylation/methyl_selex_legend.pdf", height = 3, width = 14, useDingbats = F )
+for (sel_factor in selected_factors) {
+  metil_file <- metil_yin[grepl(sel_factor, metil_yin)]
+  nometil_file <- nometil_yin[grepl(sel_factor, nometil_yin)]
+  if (length(metil_file) > 0 & length(nometil_file) > 0) {
+    p_left <- plot_selex_yin_return(nometil_file[1]) + ggtitle("HT-SELEX")
+    p_right <- plot_selex_yin_return(metil_file[1]) + ggtitle("Methyl-HT-SELEX")
+    gridExtra::grid.arrange(
+      p_left, p_right,
+      ncol = 2,
+      top = sel_factor
+    )
+  }
+}
+dev.off()
+
+
+
+
+
 
 #######################################################
 #################### Main figure 3b ###################
