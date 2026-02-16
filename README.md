@@ -8,6 +8,11 @@ This repository contains the code used for the paper ***Distinct DNA-binding syn
 
 bioRxiv 2026.02.10.705010; doi: [https://doi.org/10.64898/2026.02.10.705010](https://doi.org/10.64898/2026.02.10.705010)
 
-# Analyses
+# data_processing
 
-Each folder under `analyses` contains the code used for the different analyses performed in the paper. The `README.md` file in each folder provides a brief description of the analyses performed in that folder.
+The `data_processing` directory contains all the scripts used to re-analyze the public datasets, and produce the .RDS R objects that are then used by the scripts in the `figures` to produce the plots present in the paper. 
+
+
+# Figures 
+
+This directory contains the scripts needed for all the data visualization. The scripts are grouped by main/supplementary figures of the paper.
