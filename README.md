@@ -13,6 +13,10 @@ bioRxiv 2026.02.10.705010; doi: [https://doi.org/10.64898/2026.02.10.705010](htt
 The `data_processing` directory contains all the scripts used to re-analyze the public datasets, and produce the .RDS R objects that are then used by the scripts in the `figures` to produce the plots present in the paper. 
 
 
-# Figures 
+# figures 
 
 This directory contains the scripts needed for all the data visualization. The scripts are grouped by main/supplementary figures of the paper.
+
+# metadata
+
+Directory containing information about the public datasets re-analyzed in this study.
