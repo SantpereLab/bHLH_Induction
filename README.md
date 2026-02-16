@@ -1,1 +1,13 @@
-This repository contains the pipeline I have used to perfom differential gene expression analysis from multiple datasets as part of my master thesis titled "Dissecting the Regulatory Mechanisms of bHLH Transcription Factors through Differential Expression Analysis and Chromatin Profiling".
+Here is the adapted README for the new paper:
+
+---
+
+This repository contains the code used for the paper ***Distinct DNA-binding syntax and chromatin remodeling capacities of bHLH transcription factors in cell differentiation, reprogramming and cancer***.
+
+`bioarxiv` **Distinct DNA-binding syntax and chromatin remodeling capacities of bHLH transcription factors in cell differentiation, reprogramming and cancer** Xabier de Martin, Joel Martínez-Miralles, Serafima Beletskaya, Adrià Navarro, Jan Izquierdo, Baldomero Oliva, Gabriel Santpere
+
+bioRxiv 2026.02.10.705010; doi: [https://doi.org/10.64898/2026.02.10.705010](https://doi.org/10.64898/2026.02.10.705010)
+
+# Analyses
+
+Each folder under `analyses` contains the code used for the different analyses performed in the paper. The `README.md` file in each folder provides a brief description of the analyses performed in that folder.
