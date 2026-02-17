@@ -1,97 +1,103 @@
-
-# bHLH Induction Analysis Pipeline: Chromatin and Methylation Processing
-
-This repository contains the computational workflow for processing multi-omic data—including ATAC-seq, Histone ChIP-seq, and CpG Methylation—to characterize the regulatory landscape and pioneer activity of bHLH transcription factors. These scripts automate the alignment, normalization, and integration of epigenomic signals with transcription factor binding sites as described in de Martin et al. (2026).
+This repository contains the processing pipelines and analysis scripts for the multi-omic study of **basic helix-loop-helix (bHLH)** transcription factors. This framework integrates 74 induction ChIP-seq datasets across 17 different factors to decode the "motif grammar" that governs how these proteins interact with accessible and closed chromatin.
 
 ---
 
-## 🛠 Script Overview
+# bHLH Induction Analysis Framework
 
-### 1. Pre-induction Chromatin Processing
+This project provides a unified pipeline to process ChIP-seq, ATAC-seq, and WGBS data, specifically designed to investigate the pioneer activity and DNA-binding syntax of bHLH factors such as **ASCL1, NEUROG2, and MYC**.
 
-* 
-**`chromatin_alignment.sh`**: Downloads raw FASTQ files from the SRA using `fasterq-dump` and performs read alignment to the `hg38` or `mm10` reference genomes using `bwa-mem`.
+## 🛠 Prerequisites
 
-
-* 
-**`chromatin_alignment.sh`**: Filters data by removing duplicate reads with `samtools rmdup` and retaining only uniquely mapped reads.
-
+The scripts assume a Linux environment with the following tools installed and available in your `$PATH`:
 
 * 
-**`chromatin_mapping.sh`**: Converts aligned BAM files to RPKM-normalized bedGraph/bigWig format using `bamCoverage`.
+**Alignment & Processing:** `SRA-Toolkit`, `BWA`, `SAMtools`.
 
 
 * 
-**`chromatin_mapping.sh`**: Assigns a pre-induction accessibility value to each ChIP-seq peak by taking the maximum signal within a 1,000 bp window centered on the peak summit.
-
-
-
-### 2. Post-induction and Dynamics
-
-* 
-**`map_post_induction_chromatin_chipseq_peaks.sh`**: Maps post-induction accessibility signals directly onto the 1,000 bp windows of TF-bound regions to allow for direct comparison between conditions.
+**Genomic Analysis:** `BEDTools`, `UCSC liftOver`.
 
 
 * 
-**`fold_change_chromatin_data_processing.sh`**: Calculates the  fold-change in accessibility between post- and pre-induction states.
-
-
-* 
-**`fold_change_chromatin_data_processing.sh`**: Stratifies peaks by genomic location into promoters ( kb of TSS) and distal enhancers ( kb from TSS) for specialized statistical modeling.
-
-
-
-### 3. DNA Methylation
-
-* 
-**`methylation_data_processing.sh`**: Processes cell-type-matched CpG methylation data, performing coordinate liftovers (e.g., `mm9` to `mm10`) where necessary using `liftOver`.
-
-
-* 
-**`methylation_data_processing.sh`**: Computes the average CpG methylation percentage within each ChIP-seq peak coordinate using `bedtools map`.
+**Peak Calling & Coverage:** `MACS2`, `deepTools` (specifically `bamCoverage`).
 
 
 
 ---
 
-## 🧪 Methodology Summary
+## 📜 Script Guide
 
-The pipeline facilitates the integrative multi-omic framework detailed in the study:
+### 1. `chromatin_alignment.sh`
 
-* 
-**Chromatin States**: Accessibility data (ATAC-seq prioritized) is used to partition peaks into quartiles based on their pre-induction "openness".
-
+The "heavy lifter" for raw data. This script automates the retrieval and initial processing of sequencing reads:
 
 * 
-**Methylation Integration**: The processing reveals how high CpG methylation levels can redirect certain factors, such as MYC and HEY, toward atypical CAT-CAC E-box variants.
+**Data Acquisition:** Uses `fasterq-dump` to download datasets from SRA.
 
 
 * 
-**Pioneer Activity**: By comparing accessibility fold-changes, the pipeline identifies the specific capacity of CAT- and CAG-preferring bHLHs to remodel closed chromatin.
+**Alignment:** Maps reads to **mm10** (mouse) or **hg38** (human) using `bwa mem`.
+
+
+* 
+**Post-processing:** Performs duplicate removal (filtering out `XA` and `SA` tags for unique mapping), sorting, and indexing.
+
+
+* 
+**Coverage:** Generates RPKM-normalized **BedGraph** and **BigWig** files via `bamCoverage`.
 
 
 
----
+### 2. `methylation_data_processing.sh`
 
-## 🚀 Quick Start
+Handles the integration of CpG methylation data across various experimental formats:
 
-1. 
-**Alignment**: Execute `bash chromatin_alignment.sh` to process raw reads into filtered BAM files.
-
-
-2. 
-**Normalization**: Use `bash chromatin_mapping.sh` to generate RPKM-normalized signal tracks and map baseline accessibility to summits.
+* **Standardization:** Converts diverse file types into a unified BED format where the 4th column represents the **% of CpG methylation**.
+* **Coordinate Management:** Includes logic to adjust 0-based vs 1-based start/end coordinates.
+* 
+**Genome LiftOver:** Updates older methylation datasets (e.g., mm9 to mm10 or hg19 to hg38) to ensure compatibility with recent accessibility maps.
 
 
-3. 
-**Dynamics**: Run `bash fold_change_chromatin_data_processing.sh` to quantify chromatin remodeling across enhancers and promoters.
-
-
-4. 
-**Methylation**: Incorporate CpG methylation levels using `bash methylation_data_processing.sh` for downstream motif-shift analysis.
+* 
+**Quantile Calculation:** Extracts methylation levels within specific genomic windows using `bedtools map`.
 
 
 
----
+### 3. `fold_change_chromatin_data_processing.sh`
 
-Would you like me to help you configure the SRA accessions for the alignment script or provide the multivariate regression code used to analyze the resulting peak tables?
+Dedicated to identifying dynamic chromatin regions:
+
+* 
+**Peak Calling:** Uses `macs2` for both narrow (ATAC-seq) and broad (histone PTM) peaks.
+
+
+* 
+**Intersection:** Merges pre- and post-induction peak sets to identify *de novo* binding sites.
+
+
+* 
+**Fold Change:** Calculates the  fold-change of accessibility at peak summits between conditions.
+
+
+
+### 4. `chromatin_mapping.sh`
+
+The primary mapping utility for spatial analysis:
+
+* 
+**Windowing:** Resizes ChIP-seq peaks to **1000bp** windows centered on the summit.
+
+
+* 
+**Signal Integration:** Maps maximum accessibility signals from BedGraph files onto these windows across dozens of cell types (e.g., astrocytes, mESCs, fibroblasts).
+
+
+
+### 5. `map_post_induction_chromatin_chipseq_peaks.sh`
+
+A specialized analysis script focused on the co-dependence of binding and accessibility:
+
+* **Post-Induction Mapping:** Specifically maps ATAC-seq/H3K27ac signals from the "after-induction" state onto the original bHLH binding sites.
+* 
+**Induction Comparison:** Calculates the direct relationship between factor binding and the subsequent remodeling of the local chromatin landscape.
+
