@@ -10,8 +10,7 @@ This project provides a unified pipeline to process ChIP-seq, ATAC-seq, and WGBS
 
 The scripts assume a Linux environment with the following tools installed and available in your `$PATH`:
 
-* 
-**Alignment & Processing:** `SRA-Toolkit`, `BWA`, `SAMtools`.
+* **Alignment & Processing:** `SRA-Toolkit`, `BWA`, `SAMtools`.
 
 
 * 
