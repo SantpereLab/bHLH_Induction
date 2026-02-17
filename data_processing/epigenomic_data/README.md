@@ -13,12 +13,10 @@ The scripts assume a Linux environment with the following tools installed and av
 * **Alignment & Processing:** `SRA-Toolkit`, `BWA`, `SAMtools`.
 
 
-* 
-**Genomic Analysis:** `BEDTools`, `UCSC liftOver`.
+* **Genomic Analysis:** `BEDTools`, `UCSC liftOver`.
 
 
-* 
-**Peak Calling & Coverage:** `MACS2`, `deepTools` (specifically `bamCoverage`).
+* **Peak Calling & Coverage:** `MACS2`, `deepTools` (specifically `bamCoverage`).
 
 
 
@@ -30,20 +28,16 @@ The scripts assume a Linux environment with the following tools installed and av
 
 The "heavy lifter" for raw data. This script automates the retrieval and initial processing of sequencing reads:
 
-* 
-**Data Acquisition:** Uses `fasterq-dump` to download datasets from SRA.
+* **Data Acquisition:** Uses `fasterq-dump` to download datasets from SRA.
 
 
-* 
-**Alignment:** Maps reads to **mm10** (mouse) or **hg38** (human) using `bwa mem`.
+* **Alignment:** Maps reads to **mm10** (mouse) or **hg38** (human) using `bwa mem`.
 
 
-* 
-**Post-processing:** Performs duplicate removal (filtering out `XA` and `SA` tags for unique mapping), sorting, and indexing.
+* **Post-processing:** Performs duplicate removal (filtering out `XA` and `SA` tags for unique mapping), sorting, and indexing.
 
 
-* 
-**Coverage:** Generates RPKM-normalized **BedGraph** and **BigWig** files via `bamCoverage`.
+* **Coverage:** Generates RPKM-normalized **BedGraph** and **BigWig** files via `bamCoverage`.
 
 
 
@@ -52,12 +46,10 @@ The "heavy lifter" for raw data. This script automates the retrieval and initial
 
 The primary mapping utility for spatial analysis:
 
-* 
-**Windowing:** Resizes ChIP-seq peaks to **1000bp** windows centered on the summit.
+* **Windowing:** Resizes ChIP-seq peaks to **1000bp** windows centered on the summit.
 
 
-* 
-**Signal Integration:** Maps maximum accessibility signals from BedGraph files onto these windows across dozens of cell types (e.g., astrocytes, mESCs, fibroblasts).
+* **Signal Integration:** Maps maximum accessibility signals from BedGraph files onto these windows across dozens of cell types (e.g., astrocytes, mESCs, fibroblasts).
 
 
 
@@ -77,16 +69,13 @@ A specialized analysis script focused on the co-dependence of binding and access
 
 Dedicated to identifying dynamic chromatin regions:
 
-* 
-**Peak Calling:** Uses `macs2` for both narrow (ATAC-seq) and broad (histone PTM) peaks.
+* **Peak Calling:** Uses `macs2` for both narrow (ATAC-seq) and broad (histone PTM) peaks.
 
 
-* 
-**Intersection:** Merges pre- and post-induction peak sets to identify *de novo* binding sites.
+* **Intersection:** Merges pre- and post-induction peak sets to identify *de novo* binding sites.
 
 
-* 
-**Fold Change:** Calculates the  fold-change of accessibility at peak summits between conditions.
+* **Fold Change:** Calculates the  fold-change of accessibility at peak summits between conditions.
 
 
 
@@ -96,12 +85,10 @@ Handles the integration of CpG methylation data across various experimental form
 
 * **Standardization:** Converts diverse file types into a unified BED format where the 4th column represents the **% of CpG methylation**.
 * **Coordinate Management:** Includes logic to adjust 0-based vs 1-based start/end coordinates.
-* 
-**Genome LiftOver:** Updates older methylation datasets (e.g., mm9 to mm10 or hg19 to hg38) to ensure compatibility with recent accessibility maps.
+* **Genome LiftOver:** Updates older methylation datasets (e.g., mm9 to mm10 or hg19 to hg38) to ensure compatibility with recent accessibility maps.
 
 
-* 
-**Quantile Calculation:** Extracts methylation levels within specific genomic windows using `bedtools map`.
+* **Quantile Calculation:** Extracts methylation levels within specific genomic windows using `bedtools map`.
 
 
 
