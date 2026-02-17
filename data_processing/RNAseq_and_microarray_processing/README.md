@@ -8,12 +8,10 @@ This pipeline standardizes the acquisition and quality control of RNA-seq data f
 
 The entry point for data retrieval.
 
-* 
-**Role:** A script that converts GEO Sample Accessions (**GSM**) into Sequence Read Archive (**SRA**) identifiers.
+* **Role:** A script that converts GEO Sample Accessions (**GSM**) into Sequence Read Archive (**SRA**) identifiers.
 
 
-* 
-**Function:** It queries metadata using the `rentrez` package to resolve the underlying raw data links required for download.
+* **Function:** It queries metadata using the `rentrez` package to resolve the underlying raw data links required for download.
 
 
 
@@ -21,12 +19,10 @@ The entry point for data retrieval.
 
 Metadata management and organization.
 
-* 
-**Role:** Parses metadata to create clean, structured lists of SRA IDs.
+* **Role:** Parses metadata to create clean, structured lists of SRA IDs.
 
 
-* 
-**Function:** Organizes these IDs into study-specific groups to ensure that downstream processing maintains the biological context of each experiment.
+* **Function:** Organizes these IDs into study-specific groups to ensure that downstream processing maintains the biological context of each experiment.
 
 
 
@@ -34,12 +30,10 @@ Metadata management and organization.
 
 Raw data acquisition.
 
-* 
-**Role:** The "heavy lifter" for data retrieval.
+* **Role:** The "heavy lifter" for data retrieval.
 
 
-* 
-**Function:** Uses the `SRA-Toolkit` (specifically `fasterq-dump`) to download raw sequencing reads and convert them into **FASTQ** format.
+* **Function:** Uses the `SRA-Toolkit` (specifically `fasterq-dump`) to download raw sequencing reads and convert them into **FASTQ** format.
 
 
 
@@ -47,12 +41,10 @@ Raw data acquisition.
 
 Quality control and adapter trimming.
 
-* 
-**Role:** Prepares raw reads for alignment.
+* **Role:** Prepares raw reads for alignment.
 
 
-* 
-**Function:** Uses `fastp` to perform ultra-fast quality filtering, base correction, and adapter trimming. It generates reports used to exclude samples with very low read counts (e.g., <1 million reads).
+* **Function:** Uses `fastp` to perform ultra-fast quality filtering, base correction, and adapter trimming. It generates reports used to exclude samples with very low read counts (e.g., <1 million reads).
 
 
 
@@ -64,8 +56,7 @@ Aggregated quality reporting.
 **Role:** Batch visualization of QC metrics.
 
 
-* 
-**Function:** Runs `MultiQC` to combine the outputs of `fastp` and `FASTQC` across all processed samples into a single, interactive HTML report.
+* **Function:** Runs `MultiQC` to combine the outputs of `fastp` and `FASTQC` across all processed samples into a single, interactive HTML report.
 
 
 
@@ -73,12 +64,10 @@ Aggregated quality reporting.
 
 Genomic infrastructure preparation.
 
-* 
-**Role:** Prepares the reference framework for read mapping.
+* **Role:** Prepares the reference framework for read mapping.
 
 
-* 
-**Function:** Uses the `STAR` aligner to generate a genomic index for **hg38** (human) or **mm10** (mouse) based on **GENCODE** annotations.
+* **Function:** Uses the `STAR` aligner to generate a genomic index for **hg38** (human) or **mm10** (mouse) based on **GENCODE** annotations.
 
 
 
@@ -86,12 +75,10 @@ Genomic infrastructure preparation.
 
 Read mapping to reference genomes.
 
-* 
-**Role:** The primary alignment utility.
+* **Role:** The primary alignment utility.
 
 
-* 
-**Function:** Uses the **STAR** universal aligner to map both single-end and paired-end reads to **hg38** or **mm10**, producing coordinate-sorted BAM files.
+* **Function:** Uses the **STAR** universal aligner to map both single-end and paired-end reads to **hg38** or **mm10**, producing coordinate-sorted BAM files.
 
 
 
@@ -99,12 +86,10 @@ Read mapping to reference genomes.
 
 Transcript quantification.
 
-* 
-**Role:** Quantifies genomic features.
+* **Role:** Quantifies genomic features.
 
 
-* 
-**Function:** Uses **featureCounts** to count mapped reads or fragments against GENCODE annotations, automatically detecting library types (SE vs. PE).
+* **Function:** Uses **featureCounts** to count mapped reads or fragments against GENCODE annotations, automatically detecting library types (SE vs. PE).
 
 
 
@@ -112,12 +97,10 @@ Transcript quantification.
 
 Standard differential expression for studies with replicates.
 
-* 
-**Role:** Orchestrates standard differential expression analysis using **DESeq2**.
+* **Role:** Orchestrates standard differential expression analysis using **DESeq2**.
 
 
-* 
-**Function:** Employs a paired design to compare induced vs. uninduced samples and performs automated ENSEMBL-to-Symbol annotation mapping.
+* **Function:** Employs a paired design to compare induced vs. uninduced samples and performs automated ENSEMBL-to-Symbol annotation mapping.
 
 
 
@@ -125,12 +108,10 @@ Standard differential expression for studies with replicates.
 
 Specialized workflow for single-replicate studies.
 
-* 
-**Role:** Analysis of experiments lacking biological replicates.
+* **Role:** Analysis of experiments lacking biological replicates.
 
 
-* 
-**Function:** Implements a critical manual dispersion setting (e.g., 0.1) in **DESeq2** to enable statistical testing on single-sample datasets.
+* **Function:** Implements a critical manual dispersion setting (e.g., 0.1) in **DESeq2** to enable statistical testing on single-sample datasets.
 
 
 
@@ -138,12 +119,10 @@ Specialized workflow for single-replicate studies.
 
 Alternative platform processing.
 
-* 
-**Role:** A complete pipeline for legacy **Affymetrix microarray** data.
+* **Role:** A complete pipeline for legacy **Affymetrix microarray** data.
 
 
-* 
-**Function:** Uses the `affy` package for RMA normalization and the **Limma** package for differential expression analysis.
+* **Function:** Uses the `affy` package for RMA normalization and the **Limma** package for differential expression analysis.
 
 
 
@@ -151,9 +130,7 @@ Alternative platform processing.
 
 Final data integration.
 
-* 
-**Role:** Standardizes results across all platforms and species.
+* **Role:** Standardizes results across all platforms and species.
 
 
-* 
-**Function:** Iterates through all studies to create unified tables containing Gene Symbols, log2FoldChanges, and p-values for cross-factor comparison.
+* **Function:** Iterates through all studies to create unified tables containing Gene Symbols, log2FoldChanges, and p-values for cross-factor comparison.
