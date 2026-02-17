@@ -1,7 +1,3 @@
-Here is the adapted README for the new paper:
-
----
-
 This repository contains the code used for the paper ***Distinct DNA-binding syntax and chromatin remodeling capacities of bHLH transcription factors in cell differentiation, reprogramming and cancer***.
 
 `bioarxiv` **Distinct DNA-binding syntax and chromatin remodeling capacities of bHLH transcription factors in cell differentiation, reprogramming and cancer** Xabier de Martin, Joel Martínez-Miralles, Serafima Beletskaya, Adrià Navarro, Jan Izquierdo, Baldomero Oliva, Gabriel Santpere
