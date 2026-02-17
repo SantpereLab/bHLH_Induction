@@ -48,22 +48,33 @@ The "heavy lifter" for raw data. This script automates the retrieval and initial
 
 
 
-### 2. `methylation_data_processing.sh`
 
-Handles the integration of CpG methylation data across various experimental formats:
+### 2. `chromatin_mapping.sh`
 
-* **Standardization:** Converts diverse file types into a unified BED format where the 4th column represents the **% of CpG methylation**.
-* **Coordinate Management:** Includes logic to adjust 0-based vs 1-based start/end coordinates.
-* 
-**Genome LiftOver:** Updates older methylation datasets (e.g., mm9 to mm10 or hg19 to hg38) to ensure compatibility with recent accessibility maps.
-
+The primary mapping utility for spatial analysis:
 
 * 
-**Quantile Calculation:** Extracts methylation levels within specific genomic windows using `bedtools map`.
+**Windowing:** Resizes ChIP-seq peaks to **1000bp** windows centered on the summit.
+
+
+* 
+**Signal Integration:** Maps maximum accessibility signals from BedGraph files onto these windows across dozens of cell types (e.g., astrocytes, mESCs, fibroblasts).
 
 
 
-### 3. `fold_change_chromatin_data_processing.sh`
+### 3. `map_post_induction_chromatin_chipseq_peaks.sh`
+
+A specialized analysis script focused on the co-dependence of binding and accessibility:
+
+* **Post-Induction Mapping:** Specifically maps ATAC-seq/H3K27ac signals from the "after-induction" state onto the original bHLH binding sites.
+* 
+**Induction Comparison:** Calculates the direct relationship between factor binding and the subsequent remodeling of the local chromatin landscape.
+
+
+
+
+
+### 4. `fold_change_chromatin_data_processing.sh`
 
 Dedicated to identifying dynamic chromatin regions:
 
@@ -80,24 +91,18 @@ Dedicated to identifying dynamic chromatin regions:
 
 
 
-### 4. `chromatin_mapping.sh`
+### 5. `methylation_data_processing.sh`
 
-The primary mapping utility for spatial analysis:
+Handles the integration of CpG methylation data across various experimental formats:
+
+* **Standardization:** Converts diverse file types into a unified BED format where the 4th column represents the **% of CpG methylation**.
+* **Coordinate Management:** Includes logic to adjust 0-based vs 1-based start/end coordinates.
+* 
+**Genome LiftOver:** Updates older methylation datasets (e.g., mm9 to mm10 or hg19 to hg38) to ensure compatibility with recent accessibility maps.
+
 
 * 
-**Windowing:** Resizes ChIP-seq peaks to **1000bp** windows centered on the summit.
+**Quantile Calculation:** Extracts methylation levels within specific genomic windows using `bedtools map`.
 
 
-* 
-**Signal Integration:** Maps maximum accessibility signals from BedGraph files onto these windows across dozens of cell types (e.g., astrocytes, mESCs, fibroblasts).
-
-
-
-### 5. `map_post_induction_chromatin_chipseq_peaks.sh`
-
-A specialized analysis script focused on the co-dependence of binding and accessibility:
-
-* **Post-Induction Mapping:** Specifically maps ATAC-seq/H3K27ac signals from the "after-induction" state onto the original bHLH binding sites.
-* 
-**Induction Comparison:** Calculates the direct relationship between factor binding and the subsequent remodeling of the local chromatin landscape.
 
