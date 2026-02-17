@@ -22,17 +22,4 @@ A library of functions used to generate robust peak sets from biological replica
 ### 3. `count_peaks.sh`
 Performs final quantification and dataset organization:
 * **Peak Quantification**: Generates a summary table (`peak_counts.tsv`) containing GSE accessions and peak counts for every replicate and processed high-confidence set.
-* **Taxonomic Sorting**: Automatically organizes final `_confidence.bed` files into species-specific directories: `~/proneural/chip-seq/human/` or `~/proneural/chip-seq/mouse/`.
-
----
-
-## 🧪 Methodology & Quality Control
-
-The pipeline adheres to the rigorous standards established in **de Martin et al. (2026)**:
-* **High-Confidence Definition**: To minimize false positives, a peak set is only deemed "high-confidence" if it is detected in $\ge 2$ biological replicates.
-* **Summit Centrality**: The quality of refined datasets is validated by assessing the positional enrichment of canonical **CANNTG E-box** motifs around peak summits.
-* **Chromatin Context**: Processed peaks are centered on summits to facilitate integration with pre-induction chromatin accessibility (ATAC-seq) and CpG methylation data.
-
----
-
 
