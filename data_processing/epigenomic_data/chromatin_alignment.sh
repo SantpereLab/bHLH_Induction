@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-## DESCARGAR FASTQS
+## DOWNLOAD FASTQS
 ######################
 ######################
 #####################
@@ -26,9 +26,9 @@ sbatch --partition=bigmem -n 50 --wrap="prefetch SRR396793; fasterq-dump -e 50 S
 # EB (Embryoid Bodies)
 
 sbatch --partition=bigmem --wrap="prefetch SRR7133003; fasterq-dump SRR7133003 -o aydin_0h_atac_2.fastq"
-sbatch --partition=bigmem -n 16 --wrap="prefetch SRR7132991; fasterq-dump -e 16 SRR7132991 -o aydin_12h_ascl1_atac_rep2.fastq"
-sbatch --partition=bigmem -n 16 --wrap="prefetch SRR7132999; fasterq-dump -e 16 SRR7132999 -o aydin_48h_neurog2_atac_rep2.fastq"
-sbatch --partition=bigmem -n 16 --wrap="prefetch SRR3407192; fasterq-dump -e 16 SRR3407192 -o velasco_0h_EBs_ATAC_rep2.fastq"
+sbatch --partition=bigmem -n 16 --wrap="prefetch SRR7132991; fasterq-dump -e 16 SRR7132991 -o aydin_12h_ascl1_atac.fastq"
+sbatch --partition=bigmem -n 16 --wrap="prefetch SRR7132999; fasterq-dump -e 16 SRR7132999 -o aydin_48h_neurog2_atac.fastq"
+sbatch --partition=bigmem -n 16 --wrap="prefetch SRR3407192; fasterq-dump -e 16 SRR3407192 -o velasco_0h_EBs_ATAC.fastq"
 
 
 
@@ -65,11 +65,11 @@ sbatch --partition=bigmem -n 16 --wrap="prefetch SRR5445256; fasterq-dump -e 16 
 
 # MEF (Mouse Embryonic Fibroblasts)
 sbatch --partition=normal -n 16 --wrap="prefetch SRR5822253; fasterq-dump -e 16 SRR5822253 -o lee_mef_atac.fastq"
-sbatch --partition=normal -n 16 --wrap="prefetch SRR5822268; fasterq-dump -e 16 SRR5822268 -o lee_ascl1_48h_atac_rep1.fastq"
-sbatch --partition=normal -n 16 --wrap="prefetch SRR8559020; fasterq-dump -e 16 SRR8559020 -o lee_myod1_48h_atac_rep1.fastq"
+sbatch --partition=normal -n 16 --wrap="prefetch SRR5822268; fasterq-dump -e 16 SRR5822268 -o lee_ascl1_48h_atac.fastq"
+sbatch --partition=normal -n 16 --wrap="prefetch SRR8559020; fasterq-dump -e 16 SRR8559020 -o lee_myod1_48h_atac.fastq"
 
 sbatch --partition=normal -n 16 --wrap='prefetch SRR5822253; fasterq-dump -e 16 SRR5822253 -o wapinski_MEF.fastq'
-sbatch --partition=normal -n 16 --wrap='prefetch SRR5822271; fasterq-dump -e 16 SRR5822271 -o wapinski_MEF+Ascl1_48hr_B2_rep2.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR5822271; fasterq-dump -e 16 SRR5822271 -o wapinski_MEF+Ascl1_48hr_B2.fastq'
 
 
 # U2OS osteosarcoma
@@ -89,7 +89,7 @@ sbatch --partition=bigmem --wrap="prefetch SRR3933615; fasterq-dump SRR3933615 -
 sbatch --partition=bigmem --wrap="prefetch SRR3933616; fasterq-dump SRR3933616 -o npc_carter_atac_run2.fastq"
 
 # HEK cells
-sbatch --partition=normal -n 16 --wrap='prefetch SRR28879545; fasterq-dump -e 16 SRR28879545 -o dong_HEK293T_DMSO_ATAC-seq_rep1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR28879545; fasterq-dump -e 16 SRR28879545 -o dong_HEK293T_DMSO_ATAC-seq.fastq'
 
 # Primary myoblast (GM - Growth Medium)
 sbatch --partition=normal -n 16 --wrap="prefetch SRR8695962; fasterq-dump -e 16 SRR8695962 -o li_GFP-GM_K27ac_1.fastq"
@@ -109,39 +109,39 @@ sbatch --partition=normal -n 50 --wrap="prefetch SRR5063990; fasterq-dump SRR506
 # Human fibroblasts / MRC-5 etc (incluido arriba en MRC-5 o BJ)
 
 # GI-MEN
-sbatch --partition=normal -n 16 --wrap='prefetch SRR21803001; fasterq-dump -e 16 SRR21803001 -o wang_ATAC_GIMEN_ASCL1_Neg_Rep1.fastq'
-sbatch --partition=normal -n 16 --wrap='prefetch SRR21803000; fasterq-dump -e 16 SRR21803000 -o wang_ATAC_GIMEN_ASCL1_Pos_Rep1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR21803001; fasterq-dump -e 16 SRR21803001 -o wang_ATAC_GIMEN_ASCL1_Neg.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR21803000; fasterq-dump -e 16 SRR21803000 -o wang_ATAC_GIMEN_ASCL1_Pos.fastq'
 
 # SH-SY5Y
 sbatch --partition=normal -n 16 --wrap='prefetch SRR5819663; fasterq-dump -e 16 SRR5819663 -o zimmerman_SHSY5Y_ATAC_run1.fastq'
 sbatch --partition=normal -n 16 --wrap='prefetch SRR5819664; fasterq-dump -e 16 SRR5819664 -o zimmerman_SHSY5Y_ATAC_run2.fastq'
 
 # COGN415
-sbatch --partition=normal -n 16 --wrap='prefetch SRR10215662; fasterq-dump -e 16 SRR10215662 -o upton_COG-N-415_ATAC-Seq_REP1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR10215662; fasterq-dump -e 16 SRR10215662 -o upton_COG-N-415_ATAC-Seq.fastq'
 
 # LAN5
-sbatch --partition=normal -n 16 --wrap='prefetch SRR10215670; fasterq-dump -e 16 SRR10215670 -o upton_LA-N-5_ATAC_REP1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR10215670; fasterq-dump -e 16 SRR10215670 -o upton_LA-N-5_ATAC.fastq'
 
 # NB1643
-sbatch --partition=normal -n 16 --wrap='prefetch SRR10215674; fasterq-dump -e 16 SRR10215674 -o upton_NB-1643_ATAC-Seq_REP1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR10215674; fasterq-dump -e 16 SRR10215674 -o upton_NB-1643_ATAC-Seq.fastq'
 
 # NGP
-sbatch --partition=normal -n 16 --wrap='prefetch SRR10215680; fasterq-dump -e 16 SRR10215680 -o upton_NGP_ATAC-Seq_REP1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR10215680; fasterq-dump -e 16 SRR10215680 -o upton_NGP_ATAC-Seq.fastq'
 
 # Kelly
-sbatch --partition=normal -n 16 --wrap='prefetch SRR10215668; fasterq-dump -e 16 SRR10215668 -o upton_KELLY_ATAC-Seq_REP1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR10215668; fasterq-dump -e 16 SRR10215668 -o upton_KELLY_ATAC-Seq.fastq'
 
 # LNCaP
 sbatch --partition=normal -n 16 --wrap='prefetch SRR2646275; fasterq-dump -e 16 SRR2646275 -o barfeld_H3K27ac_R1881.fastq'
 sbatch --partition=normal -n 16 --wrap='prefetch SRR2646276; fasterq-dump -e 16 SRR2646276 -o barfeld_H3K27ac_R1881_Dox.fastq'
-sbatch --partition=normal -n 16 --wrap='prefetch SRR3622817; fasterq-dump -e 16 SRR3622817 -o liu_Rep1-DMSO-ATAC-seq.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR3622817; fasterq-dump -e 16 SRR3622817 -o liu-DMSO-ATAC-seq.fastq'
 
 # YB5 (colorrectal adenocarcinoma)
 sbatch --partition=normal -n 16 --wrap='prefetch SRR7060329; fasterq-dump -e 16 SRR7060329 -o zhang_yb5_atac_control_2.fastq'
 
 
 # HT29 (colorrectal adenocarcinoma, like ATCC CCL-221)
-sbatch --partition=normal -n 16 --wrap='prefetch SRR3110399; fasterq-dump -e 16 SRR3110399 -o savic_H3K27ac_DMSO_Rep1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR3110399; fasterq-dump -e 16 SRR3110399 -o savic_H3K27ac_DMSO.fastq'
 
 
 # MCF10a (mammary epithelial cell line)
@@ -155,18 +155,18 @@ sbatch --partition=normal -n 16 --wrap='prefetch SRR7942726; fasterq-dump -e 16 
 
 
 # Cardiomyocytes (mouse)
-sbatch --partition=normal -n 16 --wrap='prefetch SRR5318031; fasterq-dump -e 16 SRR5318031 -o ~/proneural/mouse/single/ziemann_cardiomyocyte_atac_P1_rep1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR5318031; fasterq-dump -e 16 SRR5318031 -o ~/proneural/mouse/single/ziemann_cardiomyocyte_atac_P1.fastq'
 
 # HK-2
-sbatch --partition=normal -n 16 --wrap='prefetch SRR16303905; fasterq-dump -e 16 SRR16303905 -o patel_ATAC-seq_HK2_EV_Rep1.fastq'
+sbatch --partition=normal -n 16 --wrap='prefetch SRR16303905; fasterq-dump -e 16 SRR16303905 -o patel_ATAC-seq_HK2_EV.fastq'
 
 # Astrocytes (mouse)
-sbatch --partition=normal -n 90 --wrap="prefetch SRR20341400; fasterq-dump SRR20341400 -e 90 -o pereira_astrocytes_GSM6368722_ATACseq_GFP_rep1.fastq"
-sbatch --partition=normal -n 90 --wrap="prefetch SRR20341403; fasterq-dump SRR20341403 -e 90 -o pereira_astrocytes_GSM6368725_ATACseq_Ngn2_rep1.fastq"
+sbatch --partition=normal -n 90 --wrap="prefetch SRR20341400; fasterq-dump SRR20341400 -e 90 -o pereira_astrocytes_GSM6368722_ATACseq_GFP.fastq"
+sbatch --partition=normal -n 90 --wrap="prefetch SRR20341403; fasterq-dump SRR20341403 -e 90 -o pereira_astrocytes_GSM6368725_ATACseq_Ngn2.fastq"
 
 
 # Mouse pluripotent stem cells
-sbatch --partition=normal -n 80 --wrap="prefetch SRR13483382; fasterq-dump SRR13483382 -e 90 -o lin_GSM5026158_ATACseq_WT0h_rep1.fastq"
+sbatch --partition=normal -n 80 --wrap="prefetch SRR13483382; fasterq-dump SRR13483382 -e 90 -o lin_GSM5026158_ATACseq_WT0h.fastq"
 
 
 # Melanoma
